@@ -54,14 +54,30 @@
 		BB14F6B32B1CE1F700A6E78D /* RickNMortyWiki */ = {
 			isa = PBXGroup;
 			children = (
-				BB14F6B42B1CE1F700A6E78D /* AppDelegate.swift */,
-				BB14F6B62B1CE1F700A6E78D /* SceneDelegate.swift */,
-				BB14F6B82B1CE1F700A6E78D /* TabBarController.swift */,
-				BB14F6BD2B1CE1F800A6E78D /* Assets.xcassets */,
-				BB14F6BF2B1CE1F800A6E78D /* LaunchScreen.storyboard */,
+				BB14F6C82B1CE64400A6E78D /* Resourecs */,
+				BB14F6C92B1CE66100A6E78D /* Controllers */,
 				BB14F6C22B1CE1F800A6E78D /* Info.plist */,
 			);
 			path = RickNMortyWiki;
+			sourceTree = "<group>";
+		};
+		BB14F6C82B1CE64400A6E78D /* Resourecs */ = {
+			isa = PBXGroup;
+			children = (
+				BB14F6B42B1CE1F700A6E78D /* AppDelegate.swift */,
+				BB14F6B62B1CE1F700A6E78D /* SceneDelegate.swift */,
+				BB14F6BD2B1CE1F800A6E78D /* Assets.xcassets */,
+				BB14F6BF2B1CE1F800A6E78D /* LaunchScreen.storyboard */,
+			);
+			path = Resourecs;
+			sourceTree = "<group>";
+		};
+		BB14F6C92B1CE66100A6E78D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BB14F6B82B1CE1F700A6E78D /* TabBarController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
