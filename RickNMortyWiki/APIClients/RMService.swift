@@ -32,10 +32,7 @@ final class RMService {
             completion(.failure(RMServiceError.failedToCreateRequest))
             return
         }
-        print(urlRequest)
-        print("in execute")
         let task = URLSession.shared.dataTask(with: urlRequest){ data, _ , error  in
-             print("in task")
             guard let data = data, error  == nil else {
                 completion(.failure(error ?? RMServiceError.failedToGetData))
                 return
@@ -56,7 +53,6 @@ final class RMService {
     
     //MARK: - private
     private func request(from rmRequest : RMRequest) -> URLRequest? {
-        print("in request service")
         guard let url = rmRequest.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = rmRequest.httpMethod
