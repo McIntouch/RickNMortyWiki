@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// the main controller after lauch screen
 class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
