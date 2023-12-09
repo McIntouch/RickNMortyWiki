@@ -8,6 +8,7 @@
 import UIKit
 
 protocol RMCharacterListViewDelegate: AnyObject{
+    
     func rmCharacterListViewDelegate(
         _ characterListView : RMCharacterListView,
         didSelectCharacter character: RMCharacter
@@ -40,6 +41,9 @@ final class RMCharacterListView: UIView {
         collectionView.isHidden = true
         collectionView.alpha = 0
         collectionView.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
+        collectionView.register(RMFooterLoadingCollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: RMFooterLoadingCollectionReusableView.indentifier)
         return collectionView
     }()
     
@@ -47,11 +51,11 @@ final class RMCharacterListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        addSubviews(spinner,collectionView)
+        addSubviews(collectionView,spinner)
         setUpConstraints()
         spinner.startAnimating()
         viewModel.delegate = self
-        viewModel.fetchAllCharacters()
+        viewModel.fetchCharacters()
         setUpCollectionView()
         
     }

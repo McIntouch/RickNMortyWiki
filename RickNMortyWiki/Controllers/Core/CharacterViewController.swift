@@ -16,9 +16,8 @@ class CharacterViewController: UIViewController {
         title = "Characters"
         view.backgroundColor = .systemBackground
         setupView()
-        
-        
     }
+    
     private func setupView() {
         view.addSubview(characterListView)
         characterListView.delegate = self
