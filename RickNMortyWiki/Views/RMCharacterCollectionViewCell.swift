@@ -94,7 +94,7 @@ class RMCharacterCollectionViewCell: UICollectionViewCell {
     public func configure(with viewModel:RMCharacterCollectionViewCellViewModel){
         nameLabel.text = viewModel.characterName
         statusLabel.text = viewModel.CharacterStatus
-        viewModel.fetchImage(completeion: { [weak self] result in
+        viewModel.fetchImage(completion: { [weak self] result in
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
