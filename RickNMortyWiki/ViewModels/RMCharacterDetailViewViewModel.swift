@@ -17,4 +17,12 @@ final class RMCharacterDetailViewViewModel {
     public var title:String{
         character.name
     }
+    
+    enum SectionType: CaseIterable {
+        case photo
+        case information
+        case episode
+    }
+    
+    public let sections = SectionType.allCases
 }
