@@ -31,8 +31,6 @@ class RMCharacterDetailViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(didTapShare))
         setUpConstraints()
-        detailView.collectionView?.delegate = self
-        detailView.collectionView?.dataSource = self
     }
     
     @objc
@@ -50,25 +48,3 @@ class RMCharacterDetailViewController: UIViewController {
     }
 }
 
-extension RMCharacterDetailViewController : UICollectionViewDelegate,UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        if indexPath.section == 0{
-            cell.backgroundColor = .cyan
-        }else if indexPath.section == 1 {
-            cell.backgroundColor = .blue
-        }else {
-            cell.backgroundColor = .purple
-        }
-        return cell
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel.sections.count
-    }
-    
-}
