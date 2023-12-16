@@ -8,23 +8,33 @@
 import UIKit
 
 final class RMCharacterDetailViewViewModel: NSObject {
-    private let character: RMCharacter
     
-    init(character: RMCharacter) {
-        self.character = character
-    }
+    private let character: RMCharacter
+    public var sections: [SectionType] = []
     
     public var title:String{
         character.name
     }
     
-    enum SectionType: CaseIterable {
-        case photo
-        case information
-        case episode
+    enum SectionType {
+        case photo(viewModel: RMCharacterPhotoCollectionViewCellViewModel)
+        case information(viewModels: [RMCharacterInfoCollectionViewCellViewModel])
+        case episode(viewModels: [RMCharacterEpisodeCollectionViewCellViewModel])
     }
     
-    public let sections = SectionType.allCases
+    init(character: RMCharacter) {
+        self.character = character
+        super.init()
+        setUpSections()
+    }
+    
+    private func setUpSections() {
+        sections = [
+            .photo(viewModel: .init()),
+            .information(viewModels: [.init(),.init(),.init(),.init()]),
+            .episode(viewModels: [.init(),.init(),.init(),.init()]),
+        ]
+    }
     
     //MARK: - Set up each group of the collection view
     public func createPhotoSection() -> NSCollectionLayoutSection {
@@ -89,15 +99,15 @@ final class RMCharacterDetailViewViewModel: NSObject {
 extension RMCharacterDetailViewViewModel : UICollectionViewDelegate,UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+
+        let sectionType = self.sections[section]
+        switch sectionType {
+        case .photo(let viewModel):
             return 1
-        case 1:
-            return 8
-        case 2 :
-            return 10
-        default:
-            return 0
+        case .information(let viewModels):
+            return viewModels.count
+        case .episode(let viewModels):
+            return viewModels.count
         }
     }
     
