@@ -30,9 +30,20 @@ final class RMCharacterDetailViewViewModel: NSObject {
     
     private func setUpSections() {
         sections = [
-            .photo(viewModel: .init()),
-            .information(viewModels: [.init(),.init(),.init(),.init()]),
-            .episode(viewModels: [.init(),.init(),.init(),.init()]),
+            .photo(viewModel: .init(imageURL: URL(string: character.image))),
+            .information(viewModels: [
+                .init(value: character.status.text, title: "Status"),
+                .init(value: character.gender.rawValue, title: "Gender"),
+                .init(value: character.type, title: "Type"),
+                .init(value: character.species, title: "Species"),
+                .init(value: character.origin.name, title: "Origin"),
+                .init(value: character.location.name, title: "Location"),
+                .init(value: character.created, title: "Created"),
+                .init(value: "\(character.episode.count)", title: "Total episodes"),
+            ]),
+            .episode(viewModels: character.episode.compactMap({
+                return RMCharacterEpisodeCollectionViewCellViewModel(episodeURL: URL(string: $0))
+            }))
         ]
     }
     
@@ -102,7 +113,7 @@ extension RMCharacterDetailViewViewModel : UICollectionViewDelegate,UICollection
 
         let sectionType = self.sections[section]
         switch sectionType {
-        case .photo(let viewModel):
+        case .photo:
             return 1
         case .information(let viewModels):
             return viewModels.count
@@ -112,15 +123,38 @@ extension RMCharacterDetailViewViewModel : UICollectionViewDelegate,UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        if indexPath.section == 0{
-            cell.backgroundColor = .cyan
-        }else if indexPath.section == 1 {
-            cell.backgroundColor = .blue
-        }else {
-            cell.backgroundColor = .purple
+        
+        let sectionType = self.sections[indexPath.section]
+        
+        switch sectionType {
+        case .photo(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RMCharacterPhotoCollectionViewCell.cellIdentifier,
+                for: indexPath
+            ) as? RMCharacterPhotoCollectionViewCell else {
+                fatalError()
+            }
+            cell.configure(with: viewModel)
+            return cell
+        case .information(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RMCharacterInfoCollectionViewCell.cellIdentifier,
+                for: indexPath
+            ) as? RMCharacterInfoCollectionViewCell else {
+                fatalError()
+            }
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
+        case .episode(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier,
+                for: indexPath
+            ) as? RMCharacterEpisodeCollectionViewCell else {
+                fatalError()
+            }
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
         }
-        return cell
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
